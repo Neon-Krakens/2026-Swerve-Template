@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
     // http://roborio-3822-frc.local:1181/
     if(Robot.isSimulation()) return;
     UsbCamera topCamera = CameraServer.startAutomaticCapture();
-    topCamera.setResolution(320/4, 240/4);
+    topCamera.setResolution(320/Constants.CAMERA_QUALITY_FACTOR, 240/Constants.CAMERA_QUALITY_FACTOR);
     topCamera.setFPS(10);
   }
 

@@ -11,4 +11,6 @@ public class Constants {
    
     public static final double MAX_SPEED2 = Units.feetToMeters(14.5);
     public static final double DRIVER_DEADBAND = 0.07;
+
+    public static final int CAMERA_QUALITY_FACTOR = 4;
 }
