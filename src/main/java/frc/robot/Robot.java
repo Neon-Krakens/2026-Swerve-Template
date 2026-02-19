@@ -1,13 +1,24 @@
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkRelativeEncoder;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 
 /**
  * Main robot class that manages the robot's lifecycle and operational modes.
@@ -34,6 +45,12 @@ public class Robot extends TimedRobot {
 
   /** The robot's container, which holds subsystems and commands. */
   private final RobotContainer robotContainer;
+  
+  XboxController controller = new XboxController(0);
+  SparkMax rollerMotor = new SparkMax(Constants.INTAKE_ROLLER_MOTOR_ID, MotorType.kBrushless);
+  SparkMax rotationMotor = new SparkMax(Constants.INTAKE_ROTATION_MOTOR_ID, MotorType.kBrushless);
+  SparkClosedLoopController rotationMotorController = rotationMotor.getClosedLoopController();
+  RelativeEncoder rotationMotorEncoder = rotationMotor.getEncoder();
 
   /**
    * Creates a new Robot and initializes the RobotContainer.
@@ -120,6 +137,14 @@ public class Robot extends TimedRobot {
   /** Called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    double position = rotationMotorEncoder.getPosition(); //rotation
+    double velocity = rotationMotorEncoder.getVelocity(); //RPM
+    if (controller.getAButton()) {
+        rotationMotorController.setReference(0.0, SparkMax.ControlType.kPosition);
+    }
+    else if (controller.getBButton()){
+        rotationMotorController.setReference(90.0, SparkMax.ControlType.kPosition);
+    }
   }
 
   /** Called once when operator control is exited. */

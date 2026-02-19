@@ -13,4 +13,7 @@ public class Constants {
     public static final double DRIVER_DEADBAND = 0.07;
 
     public static final int CAMERA_QUALITY_FACTOR = 4;
+    public static final int INTAKE_ROLLER_MOTOR_ID = 16;
+    public static final int INTAKE_ROTATION_MOTOR_ID = 15;
+
 }
