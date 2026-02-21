@@ -4,13 +4,13 @@
 
 package swervelib.motors;
 
-import com.thethriftybot.Conversion;
-import com.thethriftybot.Conversion.PositionUnit;
-import com.thethriftybot.Conversion.VelocityUnit;
-import com.thethriftybot.ThriftyNova;
-import com.thethriftybot.ThriftyNova.CurrentType;
-import com.thethriftybot.ThriftyNova.EncoderType;
-import com.thethriftybot.ThriftyNova.PIDSlot;
+import com.thethriftybot.util.Conversion;
+import com.thethriftybot.util.Conversion.VelocityUnit;
+import com.thethriftybot.util.Conversion.PositionUnit;
+import com.thethriftybot.devices.ThriftyNova;
+import com.thethriftybot.devices.ThriftyNova.CurrentType;
+import com.thethriftybot.devices.ThriftyNova.EncoderType;
+import com.thethriftybot.devices.ThriftyNova.PIDSlot;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.DataLogManager;
