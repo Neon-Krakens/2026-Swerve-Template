@@ -18,7 +18,12 @@ public class Intake {
   SparkClosedLoopController rotationMotorController = rotationMotor.getClosedLoopController();
   RelativeEncoder rotationMotorEncoder = rotationMotor.getEncoder();
 
+
+   /**
+    ** Initializes intake rotation motor and registers commands `Go to Zero`, and `Go to 90`.
+    **/
     public void initialize() {
+       
         SparkMaxConfig config = new SparkMaxConfig();
 
         config.encoder
