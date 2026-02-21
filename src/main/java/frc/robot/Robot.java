@@ -52,6 +52,21 @@ public class Robot extends TimedRobot {
   SparkClosedLoopController rotationMotorController = rotationMotor.getClosedLoopController();
   RelativeEncoder rotationMotorEncoder = rotationMotor.getEncoder();
 
+  @Override
+public void teleopPeriodic() {
+    double position = rotationMotorEncoder.getPosition(); // rotation
+    double velocity = rotationMotorEncoder.getVelocity(); // RPM
+
+    if (controller.getXButton()) {
+        // Set the rollerMotor to run at a constant speed, e.g., 20% power
+        rollerMotor.set(0.2);
+    } else if (controller.getYButton()) {
+        // Stop the motor when the button is not pressed
+        rollerMotor.set(0);
+    }
+}
+
+
   /**
    * Creates a new Robot and initializes the RobotContainer.
    */

@@ -20,7 +20,7 @@ import frc.robot.Constants;
  * This class serves as the robot's command center, managing all subsystem
  * instances
  * and their associated commands.
- * 
+ *
  * <p>
  * Features include:
  * <ul>
@@ -29,7 +29,7 @@ import frc.robot.Constants;
  * <li>Autonomous command selection
  * <li>Subsystem instantiation and management
  * </ul>
- * 
+ *
  * <p>
  * The class follows a centralized control pattern, with all robot behaviors
  * defined through command bindings and default commands.
