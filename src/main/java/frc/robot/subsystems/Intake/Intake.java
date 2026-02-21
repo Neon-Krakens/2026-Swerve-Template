@@ -1,7 +1,9 @@
 package frc.robot.subsystems.Intake;
 
 import com.pathplanner.lib.auto.NamedCommands;
+import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
@@ -35,7 +37,7 @@ public class Intake {
             .velocityFF(0.0)
             .outputRange(-0.5,0.5);
 
-        rotationMotor.configAccessor.apply(config); 
+        rotationMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters); 
 
         rotationMotorEncoder.setPosition(90.0);
 
