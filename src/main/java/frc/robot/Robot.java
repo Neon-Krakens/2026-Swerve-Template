@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.subsystems.Intake.Intake;
 
 /**
  * Main robot class that manages the robot's lifecycle and operational modes.
@@ -48,6 +49,7 @@ public class Robot extends TimedRobot {
   
   XboxController controller = new XboxController(0);
   SparkMax rollerMotor = new SparkMax(Constants.INTAKE_ROLLER_MOTOR_ID, MotorType.kBrushless);
+  Intake intake = new Intake();
 
   /**
    * Creates a new Robot and initializes the RobotContainer.
@@ -59,7 +61,7 @@ public class Robot extends TimedRobot {
     UsbCamera topCamera = CameraServer.startAutomaticCapture();
     topCamera.setResolution(320/Constants.CAMERA_QUALITY_FACTOR, 240/Constants.CAMERA_QUALITY_FACTOR);
     topCamera.setFPS(10);
-
+    intake.initialize();
   }
 
   /**
