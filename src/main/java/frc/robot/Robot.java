@@ -48,9 +48,6 @@ public class Robot extends TimedRobot {
   
   XboxController controller = new XboxController(0);
   SparkMax rollerMotor = new SparkMax(Constants.INTAKE_ROLLER_MOTOR_ID, MotorType.kBrushless);
-  SparkMax rotationMotor = new SparkMax(Constants.INTAKE_ROTATION_MOTOR_ID, MotorType.kBrushless);
-  SparkClosedLoopController rotationMotorController = rotationMotor.getClosedLoopController();
-  RelativeEncoder rotationMotorEncoder = rotationMotor.getEncoder();
 
   /**
    * Creates a new Robot and initializes the RobotContainer.
@@ -62,6 +59,7 @@ public class Robot extends TimedRobot {
     UsbCamera topCamera = CameraServer.startAutomaticCapture();
     topCamera.setResolution(320/Constants.CAMERA_QUALITY_FACTOR, 240/Constants.CAMERA_QUALITY_FACTOR);
     topCamera.setFPS(10);
+
   }
 
   /**
@@ -137,8 +135,8 @@ public class Robot extends TimedRobot {
   /** Called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    double position = rotationMotorEncoder.getPosition(); // rotation
-    double velocity = rotationMotorEncoder.getVelocity(); // RPM
+    // double position = rotationMotorEncoder.getPosition(); // rotation
+    //double velocity = rotationMotorEncoder.getVelocity(); // RPM
 
     if (controller.getXButton()) {
         // Set the rollerMotor to run at a constant speed, e.g., 20% power
