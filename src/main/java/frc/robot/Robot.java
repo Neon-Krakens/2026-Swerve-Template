@@ -6,6 +6,7 @@ import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkRelativeEncoder;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
@@ -157,10 +158,10 @@ public class Robot extends TimedRobot {
     }
     if (controller.getAButton()) {
         // Set the rotationMotor to a specific position, e.g., 90 degrees
-        rotationMotorController.setReference(90.0, SparkClosedLoopController.ControlType.kPosition);
+        rotationMotorController.setSetpoint(90, ControlType.kPosition);
     } else if (controller.getBButton()) {
         // Stop the motor when the button is not pressed
-        rotationMotorController.setReference(0.0, SparkClosedLoopController.ControlType.kPosition);
+        rotationMotorController.setSetpoint(0.0, ControlType.kPosition);
     }
   
   }
