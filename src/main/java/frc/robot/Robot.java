@@ -33,7 +33,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
  * <li>Test mode handling
  * <li>Periodic updates across all modes
  * </ul>
- * 
+ * <p>
  * <p>
  * The robot code is organized using WPILib's command-based framework, with
  * subsystems
@@ -52,6 +52,10 @@ public class Robot extends TimedRobot {
   SparkClosedLoopController rotationMotorController = rotationMotor.getClosedLoopController();
   RelativeEncoder rotationMotorEncoder = rotationMotor.getEncoder();
 
+  
+
+
+
   /**
    * Creates a new Robot and initializes the RobotContainer.
    */
@@ -62,6 +66,8 @@ public class Robot extends TimedRobot {
     UsbCamera topCamera = CameraServer.startAutomaticCapture();
     topCamera.setResolution(320/Constants.CAMERA_QUALITY_FACTOR, 240/Constants.CAMERA_QUALITY_FACTOR);
     topCamera.setFPS(10);
+
+
   }
 
   /**
@@ -147,6 +153,14 @@ public class Robot extends TimedRobot {
         // Stop the motor when the button is not pressed
         rollerMotor.set(0);
     }
+    if (controller.getAButton()) {
+        // Set the rotationMotor to a specific position, e.g., 90 degrees
+        rotationMotorController.setReference(90.0, SparkClosedLoopController.ControlType.kPosition);
+    } else if (controller.getBButton()) {
+        // Stop the motor when the button is not pressed
+        rotationMotorController.setReference(0.0, SparkClosedLoopController.ControlType.kPosition);
+    }
+  
   }
 
   /** Called once when operator control is exited. */
