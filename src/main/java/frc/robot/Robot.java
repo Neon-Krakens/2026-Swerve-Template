@@ -53,6 +53,8 @@ public class Robot extends TimedRobot {
   SparkMax rotationMotor = new SparkMax(Constants.INTAKE_ROTATION_MOTOR_ID, MotorType.kBrushless);
   SparkClosedLoopController rotationMotorController = rotationMotor.getClosedLoopController();
   RelativeEncoder rotationMotorEncoder = rotationMotor.getEncoder();
+  Intake intake = new Intake();
+  Shooter shooter = new Shooter();
 
   
 
