@@ -14,16 +14,16 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 
 public class Intake {
-  SparkMax rotationMotor = new SparkMax(Constants.INTAKE_ROTATION_MOTOR_ID, MotorType.kBrushless);
-  SparkClosedLoopController rotationMotorController = rotationMotor.getClosedLoopController();
-  RelativeEncoder rotationMotorEncoder = rotationMotor.getEncoder();
+    SparkMax rotationMotor = new SparkMax(Constants.INTAKE_ROTATION_MOTOR_ID, MotorType.kBrushless);
+    SparkClosedLoopController rotationMotorController = rotationMotor.getClosedLoopController();
+    RelativeEncoder rotationMotorEncoder = rotationMotor.getEncoder();
 
 
-   /**
+/**
     ** Initializes intake rotation motor and registers commands `Go to Zero`, and `Go to 90`.
     **/
     public void initialize() {
-       
+
         SparkMaxConfig config = new SparkMaxConfig();
 
         config.encoder
