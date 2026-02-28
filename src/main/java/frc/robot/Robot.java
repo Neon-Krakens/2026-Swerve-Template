@@ -6,6 +6,7 @@ import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkRelativeEncoder;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
@@ -157,6 +158,7 @@ public class Robot extends TimedRobot {
         // Stop the motor when the button is not pressed
         rollerMotor.set(0);
     }
+
   }
 
   /** Called once when operator control is exited. */
