@@ -157,14 +157,6 @@ public class Robot extends TimedRobot {
         // Stop the motor when the button is not pressed
         rollerMotor.set(0);
     }
-    if (controller.getAButton()) {
-        // Set the rotationMotor to a specific position, e.g., 90 degrees
-        rotationMotorController.setReference(90.0, SparkClosedLoopController.ControlType.kPosition);
-    } else if (controller.getBButton()) {
-        // Stop the motor when the button is not pressed
-        rotationMotorController.setReference(0.0, SparkClosedLoopController.ControlType.kPosition);
-    }
-  
   }
 
   /** Called once when operator control is exited. */
