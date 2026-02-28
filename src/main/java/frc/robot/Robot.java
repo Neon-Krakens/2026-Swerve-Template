@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.subsystems.Intake.Intake;
+import frc.robot.subsystems.Shooter.Shooter;
 
 /**
  * Main robot class that manages the robot's lifecycle and operational modes.
@@ -66,8 +68,8 @@ public class Robot extends TimedRobot {
     UsbCamera topCamera = CameraServer.startAutomaticCapture();
     topCamera.setResolution(320/Constants.CAMERA_QUALITY_FACTOR, 240/Constants.CAMERA_QUALITY_FACTOR);
     topCamera.setFPS(10);
-
-
+    intake.initialize();
+    shooter.initialize();
   }
 
   /**
@@ -143,8 +145,8 @@ public class Robot extends TimedRobot {
   /** Called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    double position = rotationMotorEncoder.getPosition(); // rotation
-    double velocity = rotationMotorEncoder.getVelocity(); // RPM
+    // double position = rotationMotorEncoder.getPosition(); // rotation
+    //double velocity = rotationMotorEncoder.getVelocity(); // RPM
 
     if (controller.getXButton()) {
         // Set the rollerMotor to run at a constant speed, e.g., 20% power

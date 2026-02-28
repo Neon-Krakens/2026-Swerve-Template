@@ -14,5 +14,6 @@ public class Constants {
     public static final int CAMERA_QUALITY_FACTOR = 4;
     public static final int INTAKE_ROLLER_MOTOR_ID = 16;
     public static final int INTAKE_ROTATION_MOTOR_ID = 15;
-
+    
+    public static final int VERTICAL_ACTUATOR_PWM_CHANNEL = 1;
 }
