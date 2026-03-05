@@ -147,29 +147,24 @@ public class Robot extends TimedRobot {
 
   /** Called periodically during operator control. */
   @Override
-public void teleopPeriodic() {
-    // Read RPM from encoders
-    double rollerMotorRPM = rollerMotor.getEncoder().getVelocity();
-    double storageMotorRPM = Roller_In_STORAGE.getEncoder().getVelocity();
-
-    // Display RPM on SmartDashboard
-    SmartDashboard.putNumber("Roller Motor RPM", rollerMotorRPM);
-    SmartDashboard.putNumber("Storage Motor RPM", storageMotorRPM);
+  public void teleopPeriodic() {
+    // double position = rotationMotorEncoder.getPosition(); // rotation
+    //double velocity = rotationMotorEncoder.getVelocity(); // RPM
 
     if (controller.getXButton()) {
-        // Set the rollerMotor to run at 20% power
+        // Set the rollerMotor to run at a constant speed, e.g., 20% power
         rollerMotor.set(0.2);
     } else if (controller.getYButton()) {
-        // Stop the rollerMotor
+        // Stop the motor when the button is not pressed
         rollerMotor.set(0);
-    } else if (controller.getAButton()) {
-        // Set the storage motor to run at 20% power forward
-        Roller_In_STORAGE.set(0.2);
+    }
+    else if (controller.getAButton()) {
+        // Set the rollerMotor to run in reverse at a constant speed, e.g., -20% power
+        Roller_In_STORAGE.set(-0.2);
     } else if (controller.getBButton()) {
-        // Stop the storage motor
+        // Stop the motor when the button is not pressed
         Roller_In_STORAGE.set(0);
     }
-}
 
   }
 
