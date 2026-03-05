@@ -158,6 +158,13 @@ public class Robot extends TimedRobot {
         // Stop the motor when the button is not pressed
         rollerMotor.set(0);
     }
+    else if (controller.getAButton()) {
+        // Set the rollerMotor to run in reverse at a constant speed, e.g., -20% power
+        rollerMotor.set(-0.2);
+    } else if (controller.getBButton()) {
+        // Stop the motor when the button is not pressed
+        rollerMotor.set(0);
+    }
 
   }
 
