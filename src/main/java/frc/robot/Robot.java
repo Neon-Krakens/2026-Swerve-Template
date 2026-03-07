@@ -50,18 +50,15 @@ public class Robot extends TimedRobot {
   private final RobotContainer robotContainer;
   
   XboxController controller = new XboxController(0);
-  // SparkMax rollerMotor = new SparkMax(Constants.INTAKE_ROLLER_MOTOR_ID, MotorType.kBrushless);
-  // SparkMax rotationMotor = new SparkMax(Constants.INTAKE_ROTATION_MOTOR_ID, MotorType.kBrushless);
   SparkMax shooterIntake = new SparkMax(14, MotorType.kBrushless);
   SparkMax shooterLeft = new SparkMax(13, MotorType.kBrushless);
   SparkMax shooterRight = new SparkMax(12, MotorType.kBrushless);
-  SparkMax agitator = new SparkMax(11, MotorType.kBrushless);
+  SparkMax agitator = new SparkMax(15, MotorType.kBrushless);
   SparkMax lifter = new SparkMax(9, MotorType.kBrushless);
-  // SparkMax StorageMotor = new SparkMax(Constants.Roller_In_STORAGE, MotorType.kBrushless);
-  // SparkClosedLoopController rotationMotorController = rotationMotor.getClosedLoopController();
-  // RelativeEncoder rotationMotorEncoder = rotationMotor.getEncoder();
-  // Intake intake = new Intake();
-  // Shooter shooter = new Shooter();
+  SparkMax turret = new SparkMax(11, MotorType.kBrushless);
+  SparkMax intake = new SparkMax(10, MotorType.kBrushless);
+
+
 
   
 
@@ -170,15 +167,28 @@ public class Robot extends TimedRobot {
     } 
     shooterLeft.set(-speed);
     shooterRight.set(speed);
-    shooterIntake.set(speed);
+    shooterIntake.set(-speed);
 
-    if (controller.getYButton()) {
-
+    if(controller.getBButton()){
+      intake.set(100);
     }
-    else if (controller.getRightBumperButton()) {
-        // Set the rollerMotor to run in reverse at a constant speed, e.g., -20% power
-        lifter.set( 0.2);
+    else intake.set(0);
 
+    if(controller.getAButtonPressed()){
+      agitator.set(-100);
+    } else agitator.set(0);
+
+    if (controller.getRightBumperButtonPressed()){
+      turret.set(5);
+    }
+    if(controller.getRightBumperButtonReleased()){
+      turret.set(0);
+    }
+    if (controller.getLeftBumperButtonPressed()){
+      turret.set(-5);
+    }
+    if(controller.getLeftBumperButtonReleased()){
+      turret.set(0);
     }
 
   
