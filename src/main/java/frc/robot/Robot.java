@@ -50,14 +50,21 @@ public class Robot extends TimedRobot {
   private final RobotContainer robotContainer;
   
   XboxController controller = new XboxController(0);
-  SparkMax rollerMotor = new SparkMax(Constants.INTAKE_ROLLER_MOTOR_ID, MotorType.kBrushless);
-  SparkMax rotationMotor = new SparkMax(Constants.INTAKE_ROTATION_MOTOR_ID, MotorType.kBrushless);
-  SparkClosedLoopController rotationMotorController = rotationMotor.getClosedLoopController();
-  RelativeEncoder rotationMotorEncoder = rotationMotor.getEncoder();
-  Intake intake = new Intake();
-  Shooter shooter = new Shooter();
+  // SparkMax rollerMotor = new SparkMax(Constants.INTAKE_ROLLER_MOTOR_ID, MotorType.kBrushless);
+  // SparkMax rotationMotor = new SparkMax(Constants.INTAKE_ROTATION_MOTOR_ID, MotorType.kBrushless);
+  SparkMax shooterIntake = new SparkMax(14, MotorType.kBrushless);
+  SparkMax shooterLeft = new SparkMax(13, MotorType.kBrushless);
+  SparkMax shooterRight = new SparkMax(12, MotorType.kBrushless);
+  SparkMax agitator = new SparkMax(11, MotorType.kBrushless);
+  SparkMax lifter = new SparkMax(9, MotorType.kBrushless);
+  // SparkMax StorageMotor = new SparkMax(Constants.Roller_In_STORAGE, MotorType.kBrushless);
+  // SparkClosedLoopController rotationMotorController = rotationMotor.getClosedLoopController();
+  // RelativeEncoder rotationMotorEncoder = rotationMotor.getEncoder();
+  // Intake intake = new Intake();
+  // Shooter shooter = new Shooter();
 
   
+
 
 
 
@@ -71,8 +78,8 @@ public class Robot extends TimedRobot {
     UsbCamera topCamera = CameraServer.startAutomaticCapture();
     topCamera.setResolution(320/Constants.CAMERA_QUALITY_FACTOR, 240/Constants.CAMERA_QUALITY_FACTOR);
     topCamera.setFPS(10);
-    intake.initialize();
-    shooter.initialize();
+    // intake.initialize();
+    // shooter.initialize();
   }
 
   /**
@@ -151,27 +158,30 @@ public class Robot extends TimedRobot {
     // double position = rotationMotorEncoder.getPosition(); // rotation
     //double velocity = rotationMotorEncoder.getVelocity(); // RPM
 
+    int speed = 0;
     if (controller.getXButton()) {
         // Set the rollerMotor to run at a constant speed, e.g., 20% power
-        rollerMotor.set(0.2);
-    } else if (controller.getYButton()) {
-        // Stop the motor when the button is not pressed
-        rollerMotor.set(0);
+        // if(shooterIntake.get()==0)
+        speed = 100;
+        // else speed = 0;
+
+        // shooterIntake.set(speed);
+        // agitator.set(speed);
+    } 
+    shooterLeft.set(-speed);
+    shooterRight.set(speed);
+    shooterIntake.set(speed);
+
+    if (controller.getYButton()) {
+
     }
-    else if (controller.getAButton()) {
+    else if (controller.getRightBumperButton()) {
         // Set the rollerMotor to run in reverse at a constant speed, e.g., -20% power
-        Roller_In_STORAGE.set(-0.2);
-    } else if (controller.getBButton()) {
-        // Stop the motor when the button is not pressed
-        Roller_In_STORAGE.set(0);
+        lifter.set( 0.2);
+
     }
-    else if (controller.get#Button()) {
-        // Set the rollerMotor to run in reverse at a constant speed, e.g., -20% power
-        Shooter_MOTOR.set(-0.2);
-    } else if (controller.get#Button()) {
-        // Stop the motor when the button is not pressed
-        Shooter_MOTOR.set(0);
-    }
+
+  
 
   }
 
