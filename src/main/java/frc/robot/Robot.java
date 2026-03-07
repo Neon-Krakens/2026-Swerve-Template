@@ -20,8 +20,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.subsystems.Intake.Intake;
-import frc.robot.subsystems.Shooter.Shooter;
+import frc.robot.subsystems.Bot.Intake;
+import frc.robot.subsystems.Bot.Shooter;
 
 /**
  * Main robot class that manages the robot's lifecycle and operational modes.
@@ -50,20 +50,13 @@ public class Robot extends TimedRobot {
   private final RobotContainer robotContainer;
   
   XboxController controller = new XboxController(0);
-  SparkMax shooterIntake = new SparkMax(14, MotorType.kBrushless);
-  SparkMax shooterLeft = new SparkMax(13, MotorType.kBrushless);
-  SparkMax shooterRight = new SparkMax(12, MotorType.kBrushless);
-  SparkMax agitator = new SparkMax(15, MotorType.kBrushless);
-  SparkMax lifter = new SparkMax(9, MotorType.kBrushless);
-  SparkMax turret = new SparkMax(11, MotorType.kBrushless);
-  SparkMax intake = new SparkMax(10, MotorType.kBrushless);
-
-
-
-  
-
-
-
+  // SparkMax shooterIntake = new SparkMax(14, MotorType.kBrushless);
+  // SparkMax shooterLeft = new SparkMax(13, MotorType.kBrushless);
+  // SparkMax shooterRight = new SparkMax(12, MotorType.kBrushless);
+  // SparkMax agitator = new SparkMax(15, MotorType.kBrushless);
+  // SparkMax lifter = new SparkMax(9, MotorType.kBrushless);
+  // SparkMax turret = new SparkMax(11, MotorType.kBrushless);
+  // SparkMax intake = new SparkMax(10, MotorType.kBrushless);
 
   /**
    * Creates a new Robot and initializes the RobotContainer.
@@ -72,9 +65,9 @@ public class Robot extends TimedRobot {
     robotContainer = new RobotContainer();
     // http://roborio-3822-frc.local:1181/
     if(Robot.isSimulation()) return;
-    UsbCamera topCamera = CameraServer.startAutomaticCapture();
-    topCamera.setResolution(320/Constants.CAMERA_QUALITY_FACTOR, 240/Constants.CAMERA_QUALITY_FACTOR);
-    topCamera.setFPS(10);
+    // UsbCamera topCamera = CameraServer.startAutomaticCapture();
+    // topCamera.setResolution(320/Constants.CAMERA_QUALITY_FACTOR, 240/Constants.CAMERA_QUALITY_FACTOR);
+    // topCamera.setFPS(10);
     // intake.initialize();
     // shooter.initialize();
   }
@@ -152,46 +145,6 @@ public class Robot extends TimedRobot {
   /** Called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    // double position = rotationMotorEncoder.getPosition(); // rotation
-    //double velocity = rotationMotorEncoder.getVelocity(); // RPM
-
-    int speed = 0;
-    if (controller.getXButton()) {
-        // Set the rollerMotor to run at a constant speed, e.g., 20% power
-        // if(shooterIntake.get()==0)
-        speed = 100;
-        // else speed = 0;
-
-        // shooterIntake.set(speed);
-        // agitator.set(speed);
-    } 
-    shooterLeft.set(-speed);
-    shooterRight.set(speed);
-    shooterIntake.set(-speed);
-
-    if(controller.getBButton()){
-      intake.set(100);
-    }
-    else intake.set(0);
-
-    if(controller.getAButtonPressed()){
-      agitator.set(-100);
-    } else agitator.set(0);
-
-    if (controller.getRightBumperButtonPressed()){
-      turret.set(5);
-    }
-    if(controller.getRightBumperButtonReleased()){
-      turret.set(0);
-    }
-    if (controller.getLeftBumperButtonPressed()){
-      turret.set(-5);
-    }
-    if(controller.getLeftBumperButtonReleased()){
-      turret.set(0);
-    }
-
-  
 
   }
 

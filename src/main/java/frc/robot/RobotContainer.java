@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.subsystems.Bot.Agitator;
+import frc.robot.subsystems.Bot.Intake;
+import frc.robot.subsystems.Bot.Shooter;
 import frc.robot.subsystems.Bot.Swerve;
 import swervelib.SwerveInputStream;
 import frc.robot.Constants;
@@ -97,6 +100,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("Move Back", swerveDrive.scootBackward());
   }
 
+  Shooter shooter = new Shooter();
+  Agitator agitator = new Agitator();
+
   /**
    * Configures button bindings for commands.
    * Maps controller buttons to specific robot actions:
@@ -113,12 +119,17 @@ public class RobotContainer {
 
     xboxController.start().onTrue(Commands.runOnce(swerveDrive::resetOdometry, swerveDrive));
 
-    // xboxController.y().toggleOnTrue(swerveDrive.cancelPathfinding());
-    // xboxController.x().toggleOnTrue(swerveDrive.goToClosestCoralTag(true));
-    // xboxController.b().toggleOnTrue(swerveDrive.goToClosestCoralTag(false));
     
     xboxController.povLeft().whileTrue(swerveDrive.scootLeft());
     xboxController.povRight().whileTrue(swerveDrive.scootRight());
+
+    xboxController.rightTrigger()
+      .whileTrue(shooter.shootForward())
+      .onFalse(shooter.spinStop());
+
+    xboxController.leftTrigger()
+      .whileTrue(agitator.funnelForward())
+      .onFalse(agitator.funnelStop());
   }
 
   /**
