@@ -102,6 +102,7 @@ public class RobotContainer {
 
   Shooter shooter = new Shooter();
   Agitator agitator = new Agitator();
+  Intake intake = new Intake();
 
   /**
    * Configures button bindings for commands.
@@ -125,11 +126,17 @@ public class RobotContainer {
 
     xboxController.rightTrigger()
       .whileTrue(shooter.shootForward())
-      .onFalse(shooter.spinStop());
+      .onFalse(shooter.shootStop());
 
     xboxController.leftTrigger()
-      .whileTrue(agitator.funnelForward())
-      .onFalse(agitator.funnelStop());
+      .whileTrue(Commands.parallel(
+        agitator.funnelForward(),
+        intake.spinIntakeForward()
+      ))
+      .onFalse(Commands.parallel(
+        agitator.funnelStop(),
+        intake.spinIntakeStop()
+      ));
   }
 
   /**

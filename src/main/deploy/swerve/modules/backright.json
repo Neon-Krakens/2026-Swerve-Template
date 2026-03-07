@@ -1,7 +1,7 @@
 {
     "location": {
         "front": -12.125,
-        "left": -12.375
+        "left": 12.375
     },
     "absoluteEncoderOffset": 30, 
     "drive": {
@@ -16,7 +16,7 @@
     },
     "encoder": {
         "type": "cancoder",
-        "id": 10,
+        "id": 17,
         "canbus": null
     },
     "inverted": {

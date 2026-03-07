@@ -19,21 +19,41 @@ public class Shooter extends SubsystemBase {
         });
     }
     
-    public Command shootReverse() {
+    public Command stopShooterIntake() {
+        return Commands.runOnce(()->{
+            shooterIntake.set(0.0);
+        });
+    }
+    
+    public Command spinTopShooterReverse() {
         return Commands.runOnce(()->{
             shooterLeft.set(100.0);
             shooterRight.set(-100.0);
         });
     }
 
-    public Command shootForward() {
+    public Command spinTopShooter() {
         return Commands.runOnce(()->{
             shooterLeft.set(-100.0);
             shooterRight.set(100.0);
         });
     }
 
-    public Command spinStop() {
+    public Command shootForward() {
+        return Commands.parallel(
+            spinShooterIntake(),
+            spinTopShooter()
+        );
+    }
+
+    public Command shootStop() {
+        return Commands.parallel(
+            stopShooterIntake(),
+            stopTopShooter()
+        );
+    }
+
+    public Command stopTopShooter() {
         return Commands.runOnce(()->{
             shooterLeft.set(0.0);
             shooterRight.set(0.0);

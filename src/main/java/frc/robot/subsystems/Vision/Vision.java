@@ -53,7 +53,7 @@ public class Vision
   /**
    * April Tag Field Layout of the year.
    */
-  public static final AprilTagFieldLayout fieldLayout= AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeAndyMark);
+  public static final AprilTagFieldLayout fieldLayout= AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltAndymark);
   /**
    * Photon Vision Simulation
    */
