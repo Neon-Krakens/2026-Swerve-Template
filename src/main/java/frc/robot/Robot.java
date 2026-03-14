@@ -1,17 +1,5 @@
 package frc.robot;
 
-import com.pathplanner.lib.auto.NamedCommands;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkRelativeEncoder;
-import com.revrobotics.spark.SparkBase.ControlType;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.config.SparkMaxConfig;
-
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -19,9 +7,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.subsystems.Bot.Intake;
-import frc.robot.subsystems.Bot.Shooter;
 
 /**
  * Main robot class that manages the robot's lifecycle and operational modes.
@@ -88,6 +73,37 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("Est. Battery", estimatedPercentage + "%");
 
     SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
+    
+    //robot pos
+    double r = robotContainer.swerveDrive.getPose().getRotation().getRadians();
+    double xp = robotContainer.swerveDrive.getPose().getX()+0.19685*Math.cos(r); //TODO: check if this rotates correctly
+    double yp = robotContainer.swerveDrive.getPose().getY()+0.19685*Math.sin(r);
+    double xv = robotContainer.swerveDrive.getRobotVelocity().vxMetersPerSecond; //TODO: is affected by angular velocity
+    double yv = robotContainer.swerveDrive.getRobotVelocity().vxMetersPerSecond;
+
+    System.out.println("Pose: xp: " + xp + ", yp: " + yp + ", xv:" + xv + ", yv: " + yv);
+
+    // position on field, 4.62534 meters X, 4.03479 meters Y
+    final double target_x = 4.62534;
+    final double target_y = 4.03479;
+
+    //global shooting velocities
+    final double target_height = 1.8288;
+    final double edge_height = target_height + .3;
+    double target_distance = Math.sqrt((target_x-xp)*(target_x-xp)+(target_y-yp)*(target_y-yp));
+    double edge_distance = target_distance-.6;
+    double x_velocity = Math.sqrt(4.9*target_distance*edge_distance*(target_distance - edge_distance)/(edge_height*target_distance - edge_distance*target_height));
+    double z_velocity = x_velocity*target_height/target_distance + 4.9*target_distance/x_velocity;
+    
+    //local shooting velocities
+    double x_target_dir = (target_x - xp)/target_distance;
+    double y_target_dir = (target_y - yp)/target_distance;
+    double x_rel_velocity = x_target_dir * x_velocity - xv;
+    double y_rel_velocity = y_target_dir * x_velocity - yv;
+    double shooting_vel_xy = Math.sqrt(x_rel_velocity*x_rel_velocity + y_rel_velocity*y_rel_velocity);
+    double shooting_dir_horiz = Math.atan2(y_rel_velocity, x_rel_velocity);
+    double shooting_dir_virt = Math.atan2(z_velocity, shooting_vel_xy);
+    double shooting_speed = Math.sqrt(shooting_vel_xy*shooting_vel_xy + z_velocity*z_velocity);
   }
 
   /** Called once when the robot is disabled. */
