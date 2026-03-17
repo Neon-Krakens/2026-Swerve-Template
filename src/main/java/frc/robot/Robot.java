@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.math.proto.System;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -84,7 +85,7 @@ public class Robot extends TimedRobot {
     double yp = robotContainer.swerveDrive.getPose().getY()+0.19685*Math.sin(r)+latency*yv;
 
     System.out.println("Pose: xp: " + xp + ", yp: " + yp + ", xv:" + xv + ", yv: " + yv);
-
+    
     // position on field, 4.62534 meters X, 4.03479 meters Y
     final double target_x = 4.62534;
     final double target_y = 4.03479;
@@ -106,6 +107,8 @@ public class Robot extends TimedRobot {
     double shooting_dir_horiz = Math.atan2(y_rel_velocity, x_rel_velocity);
     double shooting_dir_virt = Math.atan2(z_velocity, shooting_vel_xy);
     double shooting_speed = Math.sqrt(shooting_vel_xy*shooting_vel_xy + z_velocity*z_velocity);
+
+    System.out.println("Targeting: shooting_speed: " + shooting_speed + ", shooting_dir_horiz: " + shooting_dir_horiz + ", shooting_dir_virt:" + shooting_dir_virt);
   }
 
   /** Called once when the robot is disabled. */
