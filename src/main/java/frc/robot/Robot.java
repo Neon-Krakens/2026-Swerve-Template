@@ -74,12 +74,14 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
     
+    final double latency = .5; //seconds from signal to shoot to exit of ball. Probably this whole section of code should be run once to move motors and a second time after to see if correct, or if further adjustments are needed
+
     //robot pos
     double r = robotContainer.swerveDrive.getPose().getRotation().getRadians();
-    double xp = robotContainer.swerveDrive.getPose().getX()+0.19685*Math.cos(r); //TODO: check if this rotates correctly
-    double yp = robotContainer.swerveDrive.getPose().getY()+0.19685*Math.sin(r);
     double xv = robotContainer.swerveDrive.getRobotVelocity().vxMetersPerSecond; //TODO: is affected by angular velocity
     double yv = robotContainer.swerveDrive.getRobotVelocity().vxMetersPerSecond;
+    double xp = robotContainer.swerveDrive.getPose().getX()+0.19685*Math.cos(r)+latency*xv; //TODO: check if this rotates correctly
+    double yp = robotContainer.swerveDrive.getPose().getY()+0.19685*Math.sin(r)+latency*yv;
 
     System.out.println("Pose: xp: " + xp + ", yp: " + yp + ", xv:" + xv + ", yv: " + yv);
 
