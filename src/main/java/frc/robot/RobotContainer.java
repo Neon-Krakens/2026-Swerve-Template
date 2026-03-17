@@ -43,7 +43,7 @@ public class RobotContainer {
   private final CommandXboxController xboxController = new CommandXboxController(0);
   private final SendableChooser<String> autos = new SendableChooser<>();
   /** Main drive subsystem for robot movement. */
-  private final Swerve swerveDrive = Swerve.getInstance();
+  public final Swerve swerveDrive = Swerve.getInstance();
 
   /**
    * Input stream for swerve drive control.
