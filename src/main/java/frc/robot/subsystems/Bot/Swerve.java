@@ -12,15 +12,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.PathfindingCommand;
-import com.pathplanner.lib.config.PIDConstants;
-import com.pathplanner.lib.config.RobotConfig;
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.util.FileVersionException;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -39,13 +30,11 @@ import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.DriveToPath;
 import frc.robot.subsystems.Vision.Vision.Cameras;
 import swervelib.SwerveDrive;
 import swervelib.imu.SwerveIMU;
 import swervelib.math.SwerveMath;
 
-import org.json.simple.parser.ParseException;
 import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
@@ -145,105 +134,10 @@ public class Swerve extends SubsystemBase {
             // updates better.
             // swerveDrive.stopOdometryThread();
         }
-        setupPathPlanner();
-        loadPaths();
     }
 
      // Path Planning Paths
-    public PathPlannerPath Z1R;
-    public PathPlannerPath Z1L;
-    public PathPlannerPath Z2R;
-    public PathPlannerPath Z2L;
-    public PathPlannerPath Z3R;
-    public PathPlannerPath Z3L;
-    public PathPlannerPath Z4R;
-    public PathPlannerPath Z4L;
-    public PathPlannerPath Z5R;
-    public PathPlannerPath Z5L;
-    public PathPlannerPath Z6R;
-    public PathPlannerPath Z6L;
-
-    private void loadPaths() {
-        try {
-            System.out.println("\n[Path Loading] Loading paths...");
-            Z1R = PathPlannerPath.fromPathFile("1R");
-            Z1L = PathPlannerPath.fromPathFile("1L");
-            Z2R = PathPlannerPath.fromPathFile("2R");
-            Z2L = PathPlannerPath.fromPathFile("2L");
-            Z3R = PathPlannerPath.fromPathFile("3R");
-            Z3L = PathPlannerPath.fromPathFile("3L");
-            Z4R = PathPlannerPath.fromPathFile("4R");
-            Z4L = PathPlannerPath.fromPathFile("4L");
-            Z5R = PathPlannerPath.fromPathFile("5R");
-            Z5L = PathPlannerPath.fromPathFile("5L");
-            Z6R = PathPlannerPath.fromPathFile("6R");
-            Z6L = PathPlannerPath.fromPathFile("6L");
-            System.out.println("-> All paths loaded successfully");
-        } catch (FileVersionException | IOException | ParseException e) {
-            System.err.println("!! ERROR LOADING PATHS !!");
-            e.printStackTrace();
-            // Handle null paths gracefully
-            Z1R = null;
-            Z1L = null;
-            Z2R = null;
-            Z2L = null;
-            Z3R = null;
-            Z3L = null;
-            Z4R = null;
-            Z4L = null;
-            Z5R = null;
-            Z5L = null;
-            Z6R = null;
-            Z6L = null;
-        }
-    }
-
-    /**
-     * Configures PathPlanner for autonomous path following.
-     * Sets up the necessary callbacks and controllers for autonomous navigation,
-     * including pose estimation, odometry reset, and velocity control.
-     * Also initializes path finding warm-up for better initial performance.
-     */
-    public void setupPathPlanner() {
-        RobotConfig config;
-        try {
-            config = RobotConfig.fromGUISettings();
-
-            final boolean enableFeedForward = true;
-
-            AutoBuilder.configure(
-                    this::getPose,
-                    this::resetOdometry,
-                    this::getRobotVelocity,
-                    (speedsRobotRelative, moduleFeedForwards) -> {
-                        if (enableFeedForward) {
-                            swerveDrive.drive(
-                                    speedsRobotRelative,
-                                    swerveDrive.kinematics.toSwerveModuleStates(speedsRobotRelative),
-                                    moduleFeedForwards.linearForces());
-                        } else {
-                            swerveDrive.setChassisSpeeds(speedsRobotRelative);
-                        }
-                    },
-                    new PPHolonomicDriveController(
-                            new PIDConstants(5.0, 0.0, 0.0),
-                            new PIDConstants(5.0, 0.0, 0.0)),
-                    config,
-                    () -> {
-                        var alliance = DriverStation.getAlliance();
-                        if (alliance.isPresent()) {
-                            return alliance.get() == DriverStation.Alliance.Red;
-                        }
-                        return false;
-                    },
-                    this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        PathfindingCommand.warmupCommand().schedule();
-
-    }
+   
     
     // public Command goToClosestCoralTag(boolean alignLeftSide) {
     //     return run(() -> {
@@ -508,17 +402,7 @@ public class Swerve extends SubsystemBase {
      * @param pose the target Pose2d to drive to
      * @return a Command that will drive the robot to the specified pose
      */
-    public Command driveToPose(Pose2d pose) {
-        PathConstraints constraints = new PathConstraints(
-                swerveDrive.getMaximumChassisVelocity(), 4.0,
-                Constants.MAX_ANGULAR_VELOCITY, 
-                Constants.MAX_ANGULAR_VELOCITY);
-                
-        return AutoBuilder.pathfindToPose(
-                pose,
-                constraints,
-                edu.wpi.first.units.Units.MetersPerSecond.of(0));
-    }
+
     
 
     /**

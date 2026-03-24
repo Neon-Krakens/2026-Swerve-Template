@@ -1,7 +1,5 @@
 package frc.robot;
 
-import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -94,7 +92,6 @@ public class RobotContainer {
 
   private void setupPathPlannerCommands() {
     // Commands for PathPlanner auto routines
-    NamedCommands.registerCommand("Move Back", swerveDrive.scootBackward());
   }
 
   /**
@@ -128,22 +125,6 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous mode
    */
-  public Command getAutonomousCommand() {
-    String selectedAuto = autos.getSelected();
-
-    switch (selectedAuto) {
-      case "LEFT2":
-        return new PathPlannerAuto("Left Auto 2 Coral");
-      case "MID":
-        return new PathPlannerAuto("Mid Auto");
-      case "RIGHT2":
-        return new PathPlannerAuto("Right Auto 2 Coral");
-      default:
-        break;
-    }
-
-    return new PathPlannerAuto("Mid Auto");
-  }
 
   public CommandXboxController getController() {
     return xboxController;
